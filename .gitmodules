@@ -1,0 +1,6 @@
+[submodule "circuit-registry"]
+	path = circuit-registry
+	url = git@github.com:zkmopro/circuit-registry.git
+[submodule "snurk"]
+	path = snurk
+	url = git@github.com:sifnoc/snurk.git
