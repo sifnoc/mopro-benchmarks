@@ -8,8 +8,8 @@ async function measureTime(callback) {
 
 async function initializeWasm() {
     try {
-        const mopro_wasm = await import('./keccak256-pkg/snurk_wasm.js');
-        await mopro_wasm.default();
+        const mopro_wasm = await import('./snurk_wasm.js');
+        await mopro_wasm.default("https://github.com/sifnoc/mopro-benchmarks/raw/refs/heads/main/bench-app/keccak256-pkg/snurk_wasm_bg.wasm");
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
     } catch (error) {
