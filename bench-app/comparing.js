@@ -1,4 +1,6 @@
 // Measure the execution time of a given callback
+const baseUrl = "https://github.com/sifnoc/mopro-benchmarks/releases/download/v0.1.0"; 
+
 async function measureTime(callback) {
     const start = performance.now();
     const result = await callback();
@@ -9,7 +11,7 @@ async function measureTime(callback) {
 async function initializeWasm() {
     try {
         const mopro_wasm = await import('./pkg/snurk_wasm.js');
-        await mopro_wasm.default("https://github.com/sifnoc/mopro-benchmarks/releases/download/v0.1.0/snurk_wasm_bg.wasm");
+        await mopro_wasm.default(`${baseUrl}/snurk_wasm_bg.wasm`);
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
     } catch (error) {
@@ -87,9 +89,7 @@ function addRowToTable(tableBodyId, label, timeMs) {
 
 
     // Perfoming snarkjs bench
-    times = [];
-
-    const baseUrl = "https://sifnoc.github.io/mopro-benchmarks/test-vectors"; 
+    times = [];    
 
     const wasm = await fetch(`${baseUrl}/keccak256_256_test.wasm`)
     .then(response => {
