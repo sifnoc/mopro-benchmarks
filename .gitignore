@@ -1,1 +1,4 @@
 /target
+/circuit-registry/**/*.zkey
+/circuit-registry/**/*.r1cs
+/circuit-registry/**/*.wasm

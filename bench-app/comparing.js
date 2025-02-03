@@ -8,7 +8,7 @@ async function measureTime(callback) {
 
 async function initializeWasm() {
     try {
-        const mopro_wasm = await import('./pkg/snurk_wasm.js');
+        const mopro_wasm = await import('./keccak256-pkg/snurk_wasm.js');
         await mopro_wasm.default();
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
@@ -59,6 +59,7 @@ function addRowToTable(tableBodyId, label, timeMs) {
 }
 
 (async function() {
+    // Perfoming wasm bench
     const snurk_wasm = await initializeWasm();
 
     const iterations = 10;
@@ -78,8 +79,42 @@ function addRowToTable(tableBodyId, label, timeMs) {
     }
 
     console.log("times: ", times);
-    const avg = times.reduce((a, b) => a + b, 0) / times.length;
-    console.log("avg: ", avg);
+    const wasmAvg = times.reduce((a, b) => a + b, 0) / times.length;
+    console.log("avg: ", wasmAvg);
 
-    addRowToTable("ark-groth16-test-results", "Average", avg.toFixed(2));
+    addRowToTable("ark-groth16-test-results", "Average", wasm-avg.toFixed(2));
+
+
+    // Perfoming snarkjs bench
+    const _snarkjs = import("snarkjs");
+    const snarkjs = await _snarkjs;
+
+    times = [];
+
+    const wasm = await fetch("https://github.com/sifnoc/mopro-benchmarks/raw/refs/heads/main/test-vectors/keccak256_256_test.wasm")
+    const zkey = await fetch("https://github.com/sifnoc/mopro-benchmarks/raw/refs/heads/main/test-vectors/keccak256_256_test_final.zkey")
+
+
+    for (let i = 1; i <= iterations; i++) {
+      let input = generateRandomKeccakInput(32, 8);
+
+      const { timeTaken } = await measureTime(() =>
+        snarkjs.groth16.fullProve(
+          input,
+          new Uint8Array(wasm),
+          new Uint8Array(zkey)) 
+      );
+
+      addRowToTable("snarkjs-test-results", `Test #${i}`, timeTaken.toFixed(2));
+
+      // Store time for average calculation
+      times.push(timeTaken);
+  }
+
+  console.log("times: ", times);
+  const snarkjsAvg = times.reduce((a, b) => a + b, 0) / times.length;
+  console.log("avg: ", snarkjsAvg);
+
+  addRowToTable("ark-groth16-test-results", "Average", wasm-avg.toFixed(2));
+
 })();
