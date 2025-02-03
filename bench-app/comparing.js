@@ -1,5 +1,5 @@
 // Measure the execution time of a given callback
-const baseUrl = "https://github.com/sifnoc/mopro-benchmarks/releases/download/v0.1.0"; 
+const baseUrl = "https://sifnoc.github.io/mopro-benchmarks"; 
 
 async function measureTime(callback) {
     const start = performance.now();
@@ -11,7 +11,7 @@ async function measureTime(callback) {
 async function initializeWasm() {
     try {
         const mopro_wasm = await import('./pkg/snurk_wasm.js');
-        await mopro_wasm.default(`${baseUrl}/snurk_wasm_bg.wasm`);
+        await mopro_wasm.default(`${baseUrl}/pkg/snurk_wasm_bg.wasm`);
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
     } catch (error) {
@@ -91,14 +91,14 @@ function addRowToTable(tableBodyId, label, timeMs) {
     // Perfoming snarkjs bench
     times = [];    
 
-    const wasm = await fetch(`${baseUrl}/keccak256_256_test.wasm`)
+    const wasm = await fetch(`${baseUrl}/test-vectors/keccak256_256_test.wasm`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to fetch WASM file: ${response.statusText}`);
       }
       return response.arrayBuffer();
     });
-    const zkey = await fetch(`${baseUrl}/keccak256_256_test_final.zkey`)
+    const zkey = await fetch(`${baseUrl}/test-vectors/keccak256_256_test_final.zkey`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to fetch zkey file: ${response.statusText}`);

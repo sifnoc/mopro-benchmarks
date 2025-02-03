@@ -1,3 +1,4 @@
-test-vectors/keccak256_256_test_final.zkey filter=lfs diff=lfs merge=lfs -text
 bench-app/pkg/snurk_wasm_bg.wasm filter=lfs diff=lfs merge=lfs -text
 bench-app/test-vectors/keccak256_256_test_final.zkey filter=lfs diff=lfs merge=lfs -text
+bench-app/test-vectors/keccak256_256_test.wasm filter=lfs diff=lfs merge=lfs -text
+bench-app/test-vectors/keccak256_256_test.r1cs filter=lfs diff=lfs merge=lfs -text
