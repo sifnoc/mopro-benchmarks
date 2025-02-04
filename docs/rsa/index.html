@@ -3,11 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
-    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mopro WASM Test</title>
+    <title>Keccak256 Benchmark</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
         table {
             width: 50%;
             margin: 20px auto;
@@ -28,8 +39,8 @@
 </head>
 
 <body>
-    <h1 style="text-align: center;">Mopro Comparison Bench</h1>
-    <h2 style="text-align: center;">ark-groth16 - keccak256</h2>
+    <h1 style="text-align: center;">RSA Benchmark</h1>
+    <h2 style="text-align: center;">ark-groth16(wasm)</h2>
     <table style="margin-top: 20px; text-align: left">
         <thead>
             <tr>
@@ -41,7 +52,7 @@
             <!-- Rows will be dynamically updated here -->
         </tbody>
     </table>
-    <h2 style="text-align: center;">snarkJs - keccak256</h2>
+    <h2 style="text-align: center;">snarkJs</h2>
     <table style="margin-top: 20px; text-align: left">
         <thead>
             <tr>
@@ -53,10 +64,7 @@
             <!-- Rows will be dynamically updated here -->
         </tbody>
     </table>
-    <script src="./coi-serviceworker.js"></script>
-    <script src="./snarkjs.min.js" />
-    </script>
-    <script src="./comparing.js"></script>
+    <script src="../keccak256/coi-serviceworker.js"></script>
 </body>
 
 </html>
