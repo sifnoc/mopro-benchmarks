@@ -81,7 +81,7 @@ function addRowToTable(tableBodyId, label, timeMs) {
   // Perfoming wasm bench
   const snurk_wasm = await initializeWasm();
 
-  const iterations = 1;
+  const iterations = 10;
   let times = [];
 
   for (let i = 1; i <= iterations; i++) {
@@ -102,6 +102,7 @@ function addRowToTable(tableBodyId, label, timeMs) {
   console.log("wasm proof generation avg time(ms): ", wasmAvg);
 
   addRowToTable("ark-groth16-test-results", "Average", wasmAvg.toFixed(2));
+  snurk_wasm.
 
 
   // Perfoming snarkjs bench
