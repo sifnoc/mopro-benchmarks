@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
@@ -12,36 +13,40 @@
             margin: 20px auto;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
-    <h1 style="text-align: center;">WASM Browser Test</h1>
-    <h2 style="text-align: center;">ark-groth16 - keccak256</h2> 
+    <h1 style="text-align: center;">Mopro Comparison Bench</h1>
+    <h2 style="text-align: center;">ark-groth16 - keccak256</h2>
     <table style="margin-top: 20px; text-align: left">
         <thead>
             <tr>
-                <th>Test</th>
-                <th>Avg Proof Time (ms)</th>
+                <th>Test #</th>
+                <th>Proof Time (ms)</th>
             </tr>
         </thead>
         <tbody id="ark-groth16-test-results">
             <!-- Rows will be dynamically updated here -->
         </tbody>
     </table>
-    <h2 style="text-align: center;">snarkJs - keccak256</h2> 
+    <h2 style="text-align: center;">snarkJs - keccak256</h2>
     <table style="margin-top: 20px; text-align: left">
         <thead>
             <tr>
-                <th>Test</th>
-                <th>Avg Proof Time (ms)</th>
+                <th>Test #</th>
+                <th>Proof Time (ms)</th>
             </tr>
         </thead>
         <tbody id="snarkjs-test-results">
@@ -49,9 +54,9 @@
         </tbody>
     </table>
     <script src="./coi-serviceworker.js"></script>
-    <script type="module">
-        import snarkjs from 'https://cdn.jsdelivr.net/npm/snarkjs@0.7.5/+esm'
+    <script src="./snarkjs.min.js" />
     </script>
     <script src="./comparing.js"></script>
 </body>
+
 </html>
