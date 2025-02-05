@@ -10,7 +10,7 @@ async function measureTime(callback) {
 
 async function initializeWasm() {
     try {
-        const mopro_wasm = await import('./snurk_wasm.js');
+        const mopro_wasm = await import('./pkg/snurk_wasm.js');
         await mopro_wasm.default(`${baseUrl}/rsa-pkg/snurk_wasm_bg.wasm`);
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
@@ -65,9 +65,6 @@ function transformJsonToU32Array(jsonInput) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const input = await response.json();
-    console.log("input:", input);
-
-    console.log("transformed_input:", transformJsonToU32Array(input));
 
     const iterations = 10;
     let times = [];
