@@ -1,4 +1,4 @@
-# Mopro Benchmark Web App
+# Keecak256 WASM bench
 
 ```sh
 web-bench $ yarn && yarn start

@@ -47,20 +47,6 @@ function generateRandomKeccakInputWasm() {
   ];
 }
 
-function generateRandomKeccakInputSnarkjs() {
-  const bytes = new Uint8Array(32);
-  crypto.getRandomValues(bytes);
-
-  const bitsArray = [];
-  for (let i = 0; i < bytes.length; i++) {
-    for (let bit = 7; bit >= 0; bit--) {
-      bitsArray.push((bytes[i] >> bit) & 1);
-    }
-  }
-
-  return { "in": bitsArray }
-}
-
 function addRowToTable(tableBodyId, label, timeMs) {
   const tableBody = document.getElementById(tableBodyId);
   const row = document.createElement("tr");
@@ -79,69 +65,27 @@ function addRowToTable(tableBodyId, label, timeMs) {
 
 (async function () {
   // Perfoming wasm bench
-  // const snurk_wasm = await initializeWasm();
+  const snurk_wasm = await initializeWasm();
 
   const iterations = 10;
   let times = [];
 
-  // for (let i = 1; i <= iterations; i++) {
-  //   let input = generateRandomKeccakInputWasm();
-
-  //   const { timeTaken } = await measureTime(
-  //     () =>
-  //       snurk_wasm.prove(JSON.stringify(input))
-  //   );
-
-  //   addRowToTable("ark-groth16-test-results", `Test #${i}`, timeTaken.toFixed(2));
-
-  //   // Store time for average calculation
-  //   times.push(timeTaken);
-  // }
-
-  // const wasmAvg = times.reduce((a, b) => a + b, 0) / times.length;
-  // console.log("wasm proof generation avg time(ms): ", wasmAvg);
-
-  // addRowToTable("ark-groth16-test-results", "Average", wasmAvg.toFixed(2));
-
-  // Perfoming snarkjs bench
-  times = [];
-
-  const wasm = await fetch(`${baseUrl}/keccak256_256_test.wasm`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to fetch WASM file: ${response.statusText}`);
-      }
-      return response.arrayBuffer();
-    });
-  const zkey = await fetch(`${baseUrl}/keccak256_256_test_final.zkey`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to fetch zkey file: ${response.statusText}`);
-      }
-      return response.arrayBuffer();
-    });
-
-
   for (let i = 1; i <= iterations; i++) {
-    // let input = generateRandomKeccakInput(32, 8);
-    const input = generateRandomKeccakInputSnarkjs();
+    let input = generateRandomKeccakInputWasm();
 
-    const { timeTaken } = await measureTime(() =>
-      window.snarkjs.groth16.fullProve(
-        input,
-        new Uint8Array(wasm),
-        new Uint8Array(zkey))
+    const { timeTaken } = await measureTime(
+      () =>
+        snurk_wasm.prove(JSON.stringify(input))
     );
 
-    addRowToTable("snarkjs-test-results", `Test #${i}`, timeTaken.toFixed(2));
+    addRowToTable("ark-groth16-test-results", `Test #${i}`, timeTaken.toFixed(2));
 
     // Store time for average calculation
     times.push(timeTaken);
   }
 
-  const snarkjsAvg = times.reduce((a, b) => a + b, 0) / times.length;
-  console.log("snarkjs proof generation avg time(ms): ", snarkjsAvg);
+  const wasmAvg = times.reduce((a, b) => a + b, 0) / times.length;
+  console.log("wasm proof generation avg time(ms): ", wasmAvg);
 
-  addRowToTable("snarkjs-test-results", "Average", snarkjsAvg.toFixed(2));
-
+  addRowToTable("ark-groth16-test-results", "Average", wasmAvg.toFixed(2));
 })();
