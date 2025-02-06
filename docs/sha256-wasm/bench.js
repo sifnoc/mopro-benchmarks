@@ -11,7 +11,7 @@ async function measureTime(callback) {
 async function initializeWasm() {
   try {
     const mopro_wasm = await import('./pkg/snurk_wasm.js');
-    await mopro_wasm.default(`${baseUrl}/keccak256-pkg/snurk_wasm_bg.wasm`);
+    await mopro_wasm.default(`${baseUrl}/sha256-pkg/snurk_wasm_bg.wasm`);
     await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
     return mopro_wasm;
   } catch (error) {
@@ -24,7 +24,7 @@ async function initializeWasm() {
 // Please refer to `calculate_witness` fn in circom-compat:
 // https://github.com/TheFrozenFire/circom-compat/blob/e7c5c4c8b9803b9a71e36b0210491a43e19e1914/src/witness/witness_calculator.rs#L110
 function generateRandomKeccakInput() {
-  const buf = new Uint8Array(32);
+  const buf = new Uint8Array(64);
   crypto.getRandomValues(buf);
 
   let bigVal = 0n;

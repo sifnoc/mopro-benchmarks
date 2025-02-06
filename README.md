@@ -25,5 +25,3 @@ For comparing the performance of Ark-Groth16 and SnarkJS.
     --wasm ../circuit-registry/keccak256/target/keccak256_256_test_js/keccak256_256_test.wasm \
     --zkey ../circuit-registry/keccak256/target/keccak256_256_test_final.zkey
     ```
-
-    These generated files have been uploaded to the [bench-app/test-vectors](./bench-app/test-vectors/) directory.

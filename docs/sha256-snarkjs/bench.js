@@ -9,7 +9,7 @@ async function measureTime(callback) {
 }
 
 function generateRandomKeccakInput() {
-  const bytes = new Uint8Array(32);
+  const bytes = new Uint8Array(64);
   crypto.getRandomValues(bytes);
 
   const bitsArray = [];
@@ -42,14 +42,14 @@ function addRowToTable(tableBodyId, label, timeMs) {
   const iterations = 10;
   let times = [];
 
-  const wasm = await fetch(`${baseUrl}/keccak256_256_test.wasm`)
+  const wasm = await fetch(`${baseUrl}/sha256_512.wasm`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to fetch WASM file: ${response.statusText}`);
       }
       return response.arrayBuffer();
     });
-  const zkey = await fetch(`${baseUrl}/keccak256_256_test_final.zkey`)
+  const zkey = await fetch(`${baseUrl}/sha256_512_final.zkey`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to fetch zkey file: ${response.statusText}`);
