@@ -34,14 +34,14 @@ function addRowToTable(tableBodyId, label, timeMs) {
     const iterations = 10;
     let times = [];
 
-    const wasm = await fetch(`${baseUrl}/semaphore.wasm`)
+    const wasm = await fetch(`${baseUrl}/semaphore32.wasm`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch WASM file: ${response.statusText}`);
             }
             return response.arrayBuffer();
         });
-    const zkey = await fetch(`${baseUrl}/semaphore_final.zkey`)
+    const zkey = await fetch(`${baseUrl}/semaphore32.zkey`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch zkey file: ${response.statusText}`);
