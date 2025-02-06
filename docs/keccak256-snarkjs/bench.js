@@ -8,7 +8,7 @@ async function measureTime(callback) {
   return { result, timeTaken: (end - start) }; // milliseconds
 }
 
-function generateRandomKeccakInput() {
+function generateRandomKeccakInputSnarkjs() {
   const bytes = new Uint8Array(32);
   crypto.getRandomValues(bytes);
 
@@ -59,7 +59,7 @@ function addRowToTable(tableBodyId, label, timeMs) {
 
 
   for (let i = 1; i <= iterations; i++) {
-    const input = generateRandomKeccakInput();
+    const input = generateRandomKeccakInputSnarkjs();
 
     const { timeTaken } = await measureTime(() =>
       window.snarkjs.groth16.fullProve(
