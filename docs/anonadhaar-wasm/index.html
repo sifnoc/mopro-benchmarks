@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mopro Keccak256 Benchmark</title>
+    <title>Anonadhaar Verifier Benchmark</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,7 +39,15 @@
 </head>
 
 <body>
-    <h1 style="text-align: center;">Sha256_512 - SnarkJs Benchmark</h1>
+    <h1 style="text-align: center;">Anonadhaar Verifier - ark-groth16(Wasm) Benchmark</h1>
+    <div style="text-align: center; margin-top: 15px;">
+        <p style="font-weight: bold; color: red;">
+            ⚠️ This benchmark requires high memory and will not work on mobile browsers.
+        </p>
+        <p style="font-weight: bold; color: #333;">
+            Please run this test on a desktop browser with at least <span style="color: blue;">16GB of RAM</span> 
+        </p>
+    </div>
     <table style="margin-top: 20px; text-align: left">
         <thead>
             <tr>
@@ -47,13 +55,14 @@
                 <th>Proof Time (ms)</th>
             </tr>
         </thead>
-        <tbody id="snarkjs-test-results">
+        <tbody id="ark-groth16-test-results">
             <!-- Rows will be dynamically updated here -->
         </tbody>
     </table>
-    <script src="./snarkjs.min.js" />
-    </script>
+   
+    <script src="./coi-serviceworker.js"></script>
     <script src="./bench.js"></script>
+    </script>
 </body>
 
 </html>
