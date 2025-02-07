@@ -30,7 +30,6 @@ function addRowToTable(tableBodyId, label, timeMs) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const input = await response.json();
-    console.log("input: ", input);
 
     const iterations = 10;
     let times = [];

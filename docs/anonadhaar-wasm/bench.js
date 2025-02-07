@@ -11,7 +11,7 @@ async function measureTime(callback) {
 async function initializeWasm() {
     try {
         const mopro_wasm = await import('./pkg/snurk_wasm.js');
-        await mopro_wasm.default(`${baseUrl}/rsa-pkg/snurk_wasm_bg.wasm`);
+        await mopro_wasm.default(`${baseUrl}/aadhaar-pkg/snurk_wasm_bg.wasm`);
         await mopro_wasm.initThreadPool(navigator.hardwareConcurrency);
         return mopro_wasm;
     } catch (error) {
@@ -39,22 +39,24 @@ function addRowToTable(tableBodyId, label, timeMs) {
 function splitToU32Limbs(bigNumberStr) {
     let bigIntValue = BigInt(bigNumberStr);
 
-    let limbs = [];
-    while (bigIntValue > 0n) {
-        limbs.push(Number(bigIntValue & 0xffffffffn));
+    let limbs32 = [];
+    for (let i = 0; i < 8; i++) {
+        const limb = bigIntValue & 0xffff_ffffn;
+        limbs32.push(Number(limb));
         bigIntValue >>= 32n;
     }
 
-    if (limbs.length === 0) limbs.push(0);
-    return limbs;
+    if (limbs32.length === 0) limbs32.push(0);
+    return limbs32;
 }
 
+
 function transformJsonToU32Array(jsonInput) {
-    return Object.entries(jsonInput).map(([key, values]) => [
-      key,
-      values.map(str => splitToU32Limbs(str))
+    return Object.entries(jsonInput).map(([key, value]) => [
+        key,
+        Array.isArray(value) ? value.map(str => splitToU32Limbs(str)) : [splitToU32Limbs(value)]
     ]);
-  }
+}
 
 (async function () {
     // Perfoming wasm bench
